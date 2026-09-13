@@ -14,7 +14,7 @@
         </p>
 
         <h1 class="mt-3 text-3xl font-bold">
-          Add Your Home
+          <%= editing ? "Update": "Add"%> Your Home
         </h1>
 
         <p class="mt-2 text-slate-400">
@@ -26,7 +26,9 @@
       <!-- Form Card -->
       <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
 
-        <form action="/user/output-home" method="POST" class="space-y-6">
+        <form action="/user/<%= editing ? "edit-home": "output-home" %> " method="POST" class="space-y-6">
+
+          <input type="hidden" name="id" value="<%= home ? home.id : "" %>">
 
           <!-- House Name -->
           <div>
@@ -41,6 +43,7 @@
               type="text"
               id="houseName"
               name="houseName"
+               value="<%= home ? home.houseName : "" %>"
               placeholder="Enter house name"
               required
               class="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 outline-none transition focus:border-slate-500"
@@ -59,6 +62,7 @@
             <input
               type="number"
               id="price"
+              value="<%= home ? home.price : "" %>"
               name="price"
               placeholder="Enter price"
               required
@@ -79,6 +83,7 @@
               type="number"
               id="rating"
               name="rating"
+              value="<%= home ? home.rating : "" %>"
               placeholder="Enter rating (1 - 5)"
               min="1"
               max="5"
@@ -101,6 +106,7 @@
               type="url"
               id="image"
               name="image"
+              value="<%= home ? home.image : "" %>"
               placeholder="https://example.com/image.jpg"
               required
               class="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 outline-none transition focus:border-slate-500"
@@ -108,12 +114,10 @@
           </div>
 
           <!-- Submit -->
-          <button
-            type="submit"
+          <input
+            type="submit" value="<%= editing ? "Update" : "Add" %>"
             class="w-full rounded-lg bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-200"
           >
-            Add Home
-          </button>
 
         </form>
 

@@ -1,123 +1,57 @@
-<%- include("../partials/head.ejs") %>
+﻿<%- include("../partials/head.ejs") %>
 
 <body class="min-h-screen bg-slate-950 text-white">
-
   <%- include("../partials/nav.ejs") %>
 
-  <main class="mx-auto max-w-6xl px-6 py-16">
-
-
-    <!-- Homes -->
-    <section class="mt-16">
-
-      <!-- Section Header -->
-      <div class="mb-8 flex items-end justify-between">
-
+  <main class="mx-auto max-w-6xl px-6 py-10 sm:py-14">
+    <section aria-labelledby="bookings-heading">
+      <header class="mb-8 flex flex-col gap-6 border-b border-slate-800 pb-8 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p class="text-sm font-medium uppercase tracking-wider text-indigo-400">
-            Explore
-          </p>
-
-          <h2 class="mt-1 text-2xl font-bold tracking-tight text-white sm:text-3xl">
-            Available Homes
-          </h2>
-
-          <p class="mt-2 text-sm text-slate-400">
-            Explore our available properties and find your perfect stay.
-          </p>
+          <p class="text-sm font-medium uppercase tracking-widest text-indigo-400">Your stays</p>
+          <h1 id="bookings-heading" class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Your Bookings</h1>
+          <p class="mt-3 max-w-xl text-sm leading-6 text-slate-400">Keep your selected homes in one place and revisit the details whenever you need.</p>
         </div>
+        <a href="/home-list" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-950">
+          Explore Homes <span aria-hidden="true">&#8594;</span>
+        </a>
+      </header>
 
-      </div>
-
-
-      <!-- Home Cards -->
-      <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-        <% bookedHomes.forEach((home) => { %>
-
-          <li
-            class="group overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-lg shadow-black/10 transition duration-300 hover:-translate-y-1 hover:border-slate-700 hover:shadow-xl hover:shadow-black/20"
-          >
-
-            <!-- Image -->
-            <div class="relative h-52 overflow-hidden bg-slate-800">
-
-              <img
-                src="<%= home.image %>"
-                alt="<%= home.houseName %>"
-                class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-              />
-
-              <!-- Rating Badge -->
-              <div
-                class="absolute right-4 top-4 rounded-full border border-white/10 bg-slate-950/80 px-3 py-1.5 text-sm font-medium text-white backdrop-blur-md"
-              >
-                ⭐ <%= home.rating %>
+      <% if (bookedHomes.length > 0) { %>
+        <p class="mb-5 text-sm text-slate-400"><span class="font-semibold text-slate-200"><%= bookedHomes.length %></span> <%= bookedHomes.length === 1 ? 'home' : 'homes' %> in your bookings</p>
+        <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <% bookedHomes.forEach((home) => { %>
+            <li class="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-lg shadow-black/10 transition-colors hover:border-slate-600">
+              <div class="relative h-52 shrink-0 overflow-hidden bg-slate-800">
+                <img src="<%= home.image %>" alt="<%= home.houseName %>" loading="lazy" decoding="async" class="h-full w-full object-cover" />
+                <span class="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-slate-950/90 px-3 py-1.5 text-sm font-medium" aria-label="Rating: <%= home.rating %> out of 5">
+                  <span aria-hidden="true" class="text-amber-400">&#9733;</span> <%= home.rating %>
+                </span>
               </div>
-
-            </div>
-
-
-            <!-- Content -->
-            <div class="p-5">
-
-              <!-- Title -->
-              <div class="min-h-14">
-
-                <h3 class="text-lg font-semibold text-white">
-                  <%= home.houseName %>
-                </h3>
-
-                <p class="mt-1 text-sm text-slate-500">
-                  Comfortable stay
+              <div class="flex flex-1 flex-col p-5">
+                <h2 class="break-words text-lg font-semibold leading-7"><%= home.houseName %></h2>
+                <p class="mt-1 text-sm text-slate-400">Comfortable stay</p>
+                <p class="mt-5 flex flex-wrap items-baseline gap-1.5">
+                  <span class="break-all text-2xl font-bold tracking-tight">$<%= home.price %></span>
+                  <span class="text-sm text-slate-400">/ night</span>
                 </p>
-
+                <div class="mt-auto pt-5">
+                  <div class="border-t border-slate-800 pt-5">
+                    <a href="/user/<%= home.id %>" aria-label="View details for <%= home.houseName %>" class="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-center text-sm font-semibold transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900">View Details <span aria-hidden="true">&#8594;</span></a>
+                  </div>
+                </div>
               </div>
-
-
-              <!-- Price -->
-              <div class="mt-4 flex items-baseline gap-1">
-
-                <span class="text-xl font-bold text-white">
-                  $<%= home.price %>
-                </span>
-
-                <span class="text-sm text-slate-500">
-                  / night
-                </span>
-
-              </div>
-
-
-              <!-- Divider -->
-              <div class="my-2 h-px bg-slate-800"></div>
-
-
-              <!-- View Details Button -->
-              <a
-                href="/user/<%= home.id %>"
-                class="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition duration-200 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-900"
-              >
-                View Details
-
-                <span class="text-base transition-transform duration-200 group-hover:translate-x-1">
-                 
-                </span>
-              </a>
-
-            </div>
-
-          </li>
-
-        <% }) %>
-
-      </ul>
-
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <div class="rounded-2xl border border-dashed border-slate-700 bg-slate-900 px-6 py-16 text-center">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mx-auto mb-5 h-10 w-10 text-indigo-400"><path stroke-linecap="round" stroke-linejoin="round" d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-8h6v8" /></svg>
+          <h2 class="text-xl font-semibold">No bookings yet</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-400">Explore the available homes and choose Book This Home to add a stay here.</p>
+          <a href="/home-list" class="mt-6 inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900">Find a Home</a>
+        </div>
+      <% } %>
     </section>
-
   </main>
-
 </body>
-
 </html>
-

@@ -4,6 +4,8 @@ exports.getForm = (req, res, next) => {
   res.render("../views/store/inputForm", {
     pageTitle: "Add Homes",
     currentPage: "inputForm",
+    editing: false,
+    home: null,
   });
 };
 
