@@ -38,6 +38,9 @@
                   <div class="border-t border-slate-800 pt-5">
                     <a href="/user/<%= home.id %>" aria-label="View details for <%= home.houseName %>" class="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-center text-sm font-semibold transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900">View Details <span aria-hidden="true">&#8594;</span></a>
                   </div>
+                  <form action="/bookings/delete/<%= home.id %>" method="post" class="border-t border-slate-800 pt-5">
+                    <button class="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-center text-sm font-semibold transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900">Delete</button>
+                  </form>
                 </div>
               </div>
             </li>

@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const rootDir = require("../utils/pathUtils");
+const Favourites = require("./favourties");
 const filePath = path.join(rootDir, "data", "homes.json");
 
 module.exports = class Home {
@@ -52,7 +53,10 @@ module.exports = class Home {
   static deleteByMyId(homeId, callback) {
     this.fetchAll((homes) => {
       const updatedHomes = homes.filter((home) => home.id !== homeId);
-      fs.writeFile(filePath, JSON.stringify(updatedHomes), callback);
+      fs.writeFile(filePath, JSON.stringify(updatedHomes), (err) => {
+        if (err) return callback(err);
+        Favourites.deleteFavourite(homeId, callback);
+      });
     });
   }
 };

@@ -84,3 +84,13 @@ exports.postDeleteHome = (req, res, next) => {
     res.redirect("/home-list");
   });
 };
+
+exports.deleteFavourite = (req, res, next) => {
+  const homeId = req.params.homeId;
+  Favourites.deleteFavourite(homeId, (err) => {
+    if (err) {
+      console.log(err);
+    }
+    res.redirect("/bookings");
+  });
+};
