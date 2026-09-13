@@ -7,6 +7,7 @@ host.get("/home-list", hostController.getHomeList);
 host.get("/bookings", hostController.bookings);
 host.post("/bookings", hostController.myBookings);
 host.get("/user/edit-home/:homeId", hostController.getEditHome);
+host.post("/user/delete-home/:homeId", hostController.postDeleteHome);
 host.post("/user/edit-home/", hostController.postEditHome);
 
 exports.host = host;

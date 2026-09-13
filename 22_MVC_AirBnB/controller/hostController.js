@@ -74,3 +74,13 @@ exports.myBookings = (req, res, next) => {
     res.redirect("/bookings");
   });
 };
+
+exports.postDeleteHome = (req, res, next) => {
+  const homeId = req.params.homeId;
+  Home.deleteByMyId(homeId, (err) => {
+    if (err) {
+      console.log(err);
+    } 
+    res.redirect("/home-list");
+  });
+};
