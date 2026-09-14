@@ -12,9 +12,10 @@ exports.postProductList = (req, res, next) => {
 };
 
 exports.getProductList = (req, res, next) => {
-  const product = Product.fetchAll();
-  res.render("../views/store/productList.ejs", {
-    pageTitle: "Product List",
-    products: product,
+  Product.fetchAll((products) => {
+    res.render("../views/store/productList.ejs", {
+      pageTitle: "Product List",
+      products: products,
+    });
   });
 };
