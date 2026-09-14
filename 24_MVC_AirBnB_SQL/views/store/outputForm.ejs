@@ -1,0 +1,48 @@
+<%- include("../partials/head.ejs") %>
+
+  <body class="min-h-screen bg-slate-950 text-white">
+     <%- include("../partials/nav.ejs") %>
+
+    <!-- Success Content -->
+    <main
+      class="flex min-h-[calc(100vh-73px)] items-center justify-center px-6"
+    >
+      <div
+        class="w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-900 p-8 text-center"
+      >
+        <!-- Success Icon -->
+        <div
+          class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-800"
+        >
+          <span class="text-2xl text-white">✓</span>
+        </div>
+
+        <!-- Message -->
+        <h1 class="mt-6 text-3xl font-bold">Home Added Successfully</h1>
+
+        <p class="mt-3 text-slate-400">
+          Thank you for submitting your property. Your home has been added
+          successfully and is now available in our listings.
+        </p>
+
+        <!-- Actions -->
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <a
+            href="/"
+            class="rounded-lg bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-200"
+          >
+            Back to Home
+          </a>
+
+          <a
+            href="/user/add-home"
+            class="rounded-lg border border-slate-700 bg-slate-800 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-700"
+          >
+            Add Another Home
+          </a>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
+
