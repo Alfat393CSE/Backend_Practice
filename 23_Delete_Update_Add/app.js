@@ -4,6 +4,7 @@ const rootDir = require("./utils/pathUtils");
 
 const { userRoutes } = require("./routes/userRoutes");
 const { storeRoutes } = require("./routes/storeRoutes");
+const { pageNotFound } = require("./controller/errorController");
 
 const app = express();
 app.use(express.urlencoded());
@@ -14,6 +15,7 @@ app.set("views", "views");
 
 app.use(userRoutes);
 app.use(storeRoutes);
+app.use(pageNotFound);
 
 const PORT = 3000;
 app.listen(PORT, () => {
