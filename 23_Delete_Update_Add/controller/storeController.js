@@ -41,7 +41,7 @@ exports.getAddToCart = (req, res, next) => {
         products.find((product) => (product.id === id)),
       );
       res.render("../views/store/addToCart.ejs", {
-        pageTitle: `Cart List of ${products.name}`,
+        pageTitle: `Cart List`,
         products: cartList,
       });
     });
