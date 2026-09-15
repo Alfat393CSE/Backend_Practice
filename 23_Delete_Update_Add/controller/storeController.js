@@ -19,3 +19,16 @@ exports.getProductList = (req, res, next) => {
     });
   });
 };
+
+exports.getDetailes = (req, res, next) => {
+  const productId = req.params.id;
+  Product.findById(productId, (product) => {
+    if (!product) {
+      return res.redirect("/");
+    }
+    res.render("../views/store/viewDetailes.ejs", {
+      pageTitle: `View Detailes of ${product.name}`,
+      product: product,
+    });
+  });
+};
