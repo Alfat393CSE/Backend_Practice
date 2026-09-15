@@ -84,3 +84,13 @@ exports.postAddToCart = (req, res, next) => {
   Cart.addToCart(productId);
   res.redirect("/add-to-cart");
 };
+
+exports.postDeleteProduct = (req, res, next) => {
+  const productId = req.params.id;
+  Product.deleteById(productId, (err) => {
+    if (err) {
+      console.log(err);
+    }
+    res.redirect("/product-list");
+  });
+};
