@@ -1,18 +1,42 @@
+
 <%- include("../partials/head.ejs") %>
-<body>
+
+<body class="min-h-screen bg-slate-100 text-slate-900">
+
   <%- include("../partials/nav.ejs") %>
-  <h1>view detailes page</h1>
+
+  <main class="flex justify-center px-6 py-12">
+    <div class="w-full max-w-md rounded-lg bg-white p-6 shadow">
+
+      <h1 class="mb-6 text-2xl font-semibold">
+        Product Details
+      </h1>
+
+      <ul class="space-y-4">
         <li>
-           <%= product.name %>
+          <span class="text-sm text-slate-500">Product Name</span>
+          <p class="font-medium"><%= product.name %></p>
         </li>
+
         <li>
-           <%= product.price %>
+          <span class="text-sm text-slate-500">Price</span>
+          <p class="font-medium">৳ <%= product.price %></p>
         </li>
+
         <li>
-           <%= product.image %>
+          <span class="text-sm text-slate-500">Image</span>
+          <p class="break-all text-slate-700"><%= product.image %></p>
         </li>
-        <%- include("../partials/addToCart.ejs", {product : product})  %>
-   </ul>
-  
+      </ul>
+
+      <div class="mt-6">
+        <%- include("../partials/addToCart.ejs", { product: product }) %>
+      </div>
+
+    </div>
+  </main>
+
 </body>
+
 </html>
+
