@@ -12,9 +12,19 @@ module.exports = class Product {
   }
 
   save() {
-    this.id = Math.random().toString();
     Product.fetchAll((products) => {
-      products.push(this);
+      if (this.id) {
+        products = products.map((product) => {
+          if (product.id === this.id) {
+            return this;
+          } else {
+            return product;
+          }
+        });
+      } else {
+        this.id = Math.random().toString();
+        products.push(this);
+      }
       fs.writeFile(filePath, JSON.stringify(products), (err) => {
         console.log(err);
       });

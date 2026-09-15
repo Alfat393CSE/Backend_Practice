@@ -2,6 +2,7 @@
 <body>
    <%- include("../partials/nav.ejs") %>
    <form action="/<%= editing ? 'edit-product' : 'add-product'  %>" method="post">
+    <input type="hidden" name="id" placeholder="enter product name" value="<%= product ? product.id : '' %>">
     <input type="text" name="name" placeholder="enter product name" value="<%= product ? product.name : '' %>">
     <input type="price" name="price" placeholder="enter product price" value="<%= product ? product.price : '' %>">
     <input type="text" name="image" placeholder="enter product image" value="<%= product ? product.image : '' %>">

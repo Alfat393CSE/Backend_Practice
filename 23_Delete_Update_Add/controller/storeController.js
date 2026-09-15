@@ -18,6 +18,14 @@ exports.postProductList = (req, res, next) => {
   res.redirect("/product-list");
 };
 
+exports.postEditProduct = (req, res, next) => {
+  const { id, name, price, image } = req.body;
+  const products = new Product(name, price, image);
+  products.id = id;
+  products.save();
+  res.redirect("/product-list");
+};
+
 exports.getProductList = (req, res, next) => {
   Product.fetchAll((products) => {
     res.render("../views/store/productList.ejs", {

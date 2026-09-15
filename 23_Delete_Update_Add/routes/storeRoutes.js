@@ -12,6 +12,7 @@ storeRoutes.get("/add-to-cart", storeControllers.getAddToCart);
 storeRoutes.post("/add-to-cart/:id", storeControllers.postAddToCart);
 
 storeRoutes.get("/edit-product/:id", storeControllers.getEditProduct);
+storeRoutes.post("/edit-product", storeControllers.postEditProduct);
 
 
 exports.storeRoutes = storeRoutes;
