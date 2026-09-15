@@ -1,3 +1,4 @@
+const Cart = require("../models/carts");
 const Product = require("../models/products");
 
 exports.addProductForm = (req, res, next) => {
@@ -31,4 +32,24 @@ exports.getDetailes = (req, res, next) => {
       product: product,
     });
   });
+};
+
+exports.getAddToCart = (req, res, next) => {
+  Cart.getCart((cart) => {
+    Product.fetchAll((products) => {
+      const cartList = cart.map((id) =>
+        products.find((product) => (product.id === id)),
+      );
+      res.render("../views/store/addToCart.ejs", {
+        pageTitle: `Cart List of ${products.name}`,
+        products: cartList,
+      });
+    });
+  });
+};
+
+exports.postAddToCart = (req, res, next) => {
+  const productId = req.params.id;
+  Cart.addToCart(productId);
+  res.redirect("/add-to-cart");
 };

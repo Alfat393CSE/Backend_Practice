@@ -8,4 +8,8 @@ storeRoutes.post("/add-product", storeControllers.postProductList);
 storeRoutes.get("/product-list", storeControllers.getProductList);
 storeRoutes.get("/view-detailes/:id", storeControllers.getDetailes);
 
+storeRoutes.get("/add-to-cart", storeControllers.getAddToCart);
+storeRoutes.post("/add-to-cart/:id", storeControllers.postAddToCart);
+
+
 exports.storeRoutes = storeRoutes;

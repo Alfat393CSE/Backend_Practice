@@ -1,1 +1,10 @@
-[{"id":"1","name":"tea","price":"15","image":"asdf"},{"id":"2","name":"milk","price":"25","image":"cvbn"},{"name":"suger","price":"70","image":"rtyu","id":"0.31387988583135973"}]
+[
+  { "id": "1", "name": "tea", "price": "15", "image": "asdf" },
+  { "id": "2", "name": "milk", "price": "25", "image": "cvbn" },
+  {
+    "name": "suger",
+    "price": "70",
+    "image": "rtyu",
+    "id": "0.31387988583135973"
+  }
+]

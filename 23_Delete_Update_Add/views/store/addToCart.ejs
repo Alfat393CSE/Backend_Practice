@@ -1,7 +1,9 @@
 <%- include("../partials/head.ejs") %>
 <body>
-  <%- include("../partials/nav.ejs") %>
-  <h1>view detailes page</h1>
+   <%- include("../partials/nav.ejs") %>
+   <h1>Showings your carts :</h1>
+   <ul>
+    <% products.forEach(product => { %>
         <li>
            <%= product.name %>
         </li>
@@ -11,8 +13,8 @@
         <li>
            <%= product.image %>
         </li>
-        <%- include("../partials/addToCart.ejs", {product : product})  %>
+        <a href="/view-detailes/<%= product.id %>">View Detailes</a>
+   <% }) %>
    </ul>
-  
 </body>
 </html>
