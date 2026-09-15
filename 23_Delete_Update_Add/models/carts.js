@@ -27,4 +27,11 @@ module.exports = class Cart {
       }
     });
   }
+
+  static deleteCart(productId, callback) {
+    this.getCart((carts) => {
+      const updateCarts = carts.filter((id) => id !== productId);
+      fs.writeFile(filePath, JSON.stringify(updateCarts), callback);
+    });
+  }
 };

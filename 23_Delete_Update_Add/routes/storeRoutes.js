@@ -15,5 +15,6 @@ storeRoutes.get("/edit-product/:id", storeControllers.getEditProduct);
 storeRoutes.post("/edit-product", storeControllers.postEditProduct);
 
 storeRoutes.post("/delete-product/:id", storeControllers.postDeleteProduct);
+storeRoutes.post("/cart/delete-product/:id", storeControllers.deleteCart);
 
 exports.storeRoutes = storeRoutes;

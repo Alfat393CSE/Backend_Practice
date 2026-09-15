@@ -14,6 +14,10 @@
            <%= product.image %>
         </li>
         <a href="/view-detailes/<%= product.id %>">View Detailes</a>
+
+        <form action="/cart/delete-product/<%= product.id %>" method="post">
+         <button type="submit">Delete</button>
+        </form>
    <% }) %>
    </ul>
 </body>

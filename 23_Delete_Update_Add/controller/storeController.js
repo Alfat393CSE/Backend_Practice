@@ -94,3 +94,13 @@ exports.postDeleteProduct = (req, res, next) => {
     res.redirect("/product-list");
   });
 };
+
+exports.deleteCart = (req, res, next) => {
+  const productId = req.params.id;
+  Cart.deleteCart(productId, (err) => {
+    if (err) {
+      console.log(err);
+    }
+    res.redirect("/add-to-cart");
+  });
+};
