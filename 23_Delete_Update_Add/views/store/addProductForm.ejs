@@ -1,11 +1,11 @@
 <%- include("../partials/head.ejs") %>
 <body>
    <%- include("../partials/nav.ejs") %>
-   <form action="/add-product" method="post">
-    <input type="text" name="name" placeholder="enter product name">
-    <input type="price" name="price" placeholder="enter product price">
-    <input type="text" name="image" placeholder="enter product image">
-    <input type="submit">
+   <form action="/<%= editing ? 'edit-product' : 'add-product'  %>" method="post">
+    <input type="text" name="name" placeholder="enter product name" value="<%= product ? product.name : '' %>">
+    <input type="price" name="price" placeholder="enter product price" value="<%= product ? product.price : '' %>">
+    <input type="text" name="image" placeholder="enter product image" value="<%= product ? product.image : '' %>">
+    <input type="submit" value="<%= editing ? 'Edit' : 'Add'  %>">
    </form> 
 </body>
 </html>

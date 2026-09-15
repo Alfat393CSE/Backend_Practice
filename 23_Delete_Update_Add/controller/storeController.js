@@ -2,7 +2,13 @@ const Cart = require("../models/carts");
 const Product = require("../models/products");
 
 exports.addProductForm = (req, res, next) => {
-  res.render("../views/store/addProductForm.ejs", { pageTitle: "Add Product" });
+  Product.fetchAll((products) => {
+    res.render("../views/store/addProductForm.ejs", {
+      pageTitle: "Add Product",
+      editing: false,
+      product: products,
+    });
+  });
 };
 
 exports.postProductList = (req, res, next) => {
@@ -25,10 +31,27 @@ exports.getDetailes = (req, res, next) => {
   const productId = req.params.id;
   Product.findById(productId, (product) => {
     if (!product) {
-      return res.redirect("/");
+      return res.redirect("/product-list");
     }
     res.render("../views/store/viewDetailes.ejs", {
       pageTitle: `View Detailes of ${product.name}`,
+      product: product,
+    });
+  });
+};
+
+exports.getEditProduct = (req, res, next) => {
+  const editing = req.query.editing === "true";
+  const productId = req.params.id;
+
+  Product.findById(productId, (product) => {
+    if (!product) {
+      return res.redirect("/product-list");
+    }
+    res.render("../views/store/addProductForm.ejs", {
+      pageTitle: "Edit Product",
+      editing: editing,
+      productId: productId,
       product: product,
     });
   });
@@ -38,7 +61,7 @@ exports.getAddToCart = (req, res, next) => {
   Cart.getCart((cart) => {
     Product.fetchAll((products) => {
       const cartList = cart.map((id) =>
-        products.find((product) => (product.id === id)),
+        products.find((product) => product.id === id),
       );
       res.render("../views/store/addToCart.ejs", {
         pageTitle: `Cart List`,
