@@ -1,1 +1,26 @@
-[{"name":"Tea","price":"10","image":"asdf","id":"1"},{"name":"suger","price":"70","image":"rtyu","id":"0.06668933460533966"},{"name":"milk","price":"60","image":"lkjh","id":"0.7505860388235498"}]
+[
+  {
+    "name": "Tea",
+    "price": "10",
+    "image": "teaImage",
+    "id": "0.44337898944024356"
+  },
+  {
+    "name": "Milk",
+    "price": "60",
+    "image": "milkImage",
+    "id": "0.9616905445145176"
+  },
+  {
+    "name": "Suger",
+    "price": "70",
+    "image": "sugerImage",
+    "id": "0.13322158051048016"
+  },
+  {
+    "name": "Coffee",
+    "price": "15",
+    "image": "coffeeImage",
+    "id": "0.5437008205218975"
+  }
+]
