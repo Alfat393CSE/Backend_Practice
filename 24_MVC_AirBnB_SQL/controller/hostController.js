@@ -33,18 +33,23 @@ exports.getEditHome = (req, res, next) => {
   const homeId = req.params.homeId;
   const editing = req.query.editing === "true";
 
-  Home.findByMyId(homeId, (home) => {
-    if (!home) {
-      return res.redirect("/home-list");
-    }
-    console.log(editing, homeId);
-    res.render("../views/store/inputForm.ejs", {
-      home: home,
-      pageTitle: "Edit Home",
-      currentPage: "edit-home",
-      editing: editing,
+  Home.findByMyId(homeId)
+    .then(([rows]) => {
+      const home = rows[0];
+      if (!home) {
+        return res.redirect("/home-list");
+      }
+      console.log(editing, homeId);
+      res.render("../views/store/inputForm.ejs", {
+        home: home,
+        pageTitle: "Edit Home",
+        currentPage: "edit-home",
+        editing: editing,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  });
 };
 
 exports.postEditHome = (req, res, next) => {
@@ -94,12 +99,13 @@ exports.myBookings = (req, res, next) => {
 
 exports.postDeleteHome = (req, res, next) => {
   const homeId = req.params.homeId;
-  Home.deleteByMyId(homeId, (err) => {
-    if (err) {
+  Home.deleteByMyId(homeId)
+    .then(() => {
+      res.redirect("/home-list");
+    })
+    .catch((err) => {
       console.log(err);
-    }
-    res.redirect("/home-list");
-  });
+    });
 };
 
 exports.deleteFavourite = (req, res, next) => {

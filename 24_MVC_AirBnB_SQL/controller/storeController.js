@@ -27,17 +27,22 @@ exports.getFormOutput = (req, res, next) => {
 
 exports.homeDetailes = (req, res, next) => {
   const homeId = req.params.homeId;
-  Home.findByMyId(homeId, (home) => {
-    if (!home) {
-      console.log(`home not found`);
-      return res.redirect("/");
-    } else {
-      console.log(home);
-      res.render("../views/store/home-detailes.ejs", {
-        home: home,
-        pageTitle: "Home Detailes",
-        currentPage: "home-detailes",
-      });
-    }
-  });
+  Home.findByMyId(homeId)
+    .then(([rows]) => {
+      const home = rows[0];
+      if (!home) {
+        console.log(`home not found`);
+        return res.redirect("/");
+      } else {
+        console.log(home);
+        res.render("../views/store/home-detailes.ejs", {
+          home: home,
+          pageTitle: "Home Detailes",
+          currentPage: "home-detailes",
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

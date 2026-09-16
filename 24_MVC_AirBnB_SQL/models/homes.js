@@ -19,7 +19,11 @@ module.exports = class Home {
     return db.execute("SELECT * FROM homes");
   }
 
-  static findByMyId(homeId) {}
+  static findByMyId(homeId) {
+    return db.execute("SELECT * FROM homes WHERE id = ?", [homeId]);
+  }
 
-  static deleteByMyId(homeId) {}
+  static deleteByMyId(homeId) {
+    return db.execute("DELETE FROM homes WHERE id = ?", [homeId]);
+  }
 };
