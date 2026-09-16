@@ -51,12 +51,17 @@ exports.postEditHome = (req, res, next) => {
   const { id, houseName, price, image, rating } = req.body;
   const home = new Home(houseName, price, image, rating);
   home.id = id;
-  home.save();
-
-  res.render("../views/store/outputForm", {
-    pageTitle: "Add Homes",
-    currentPage: "outputForm",
-  });
+  home
+    .save()
+    .then(() => {
+      res.render("../views/store/outputForm", {
+        pageTitle: "Add Homes",
+        currentPage: "outputForm",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.bookings = (req, res, next) => {

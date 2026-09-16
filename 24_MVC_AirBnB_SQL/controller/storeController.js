@@ -12,12 +12,17 @@ exports.getForm = (req, res, next) => {
 exports.getFormOutput = (req, res, next) => {
   const { houseName, price, image, rating } = req.body;
   const home = new Home(houseName, price, image, rating);
-  home.save();
-
-  res.render("../views/store/outputForm", {
-    pageTitle: "Add Homes",
-    currentPage: "outputForm",
-  });
+  home
+    .save()
+    .then(() => {
+      res.render("../views/store/outputForm", {
+        pageTitle: "Add Homes",
+        currentPage: "outputForm",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.homeDetailes = (req, res, next) => {

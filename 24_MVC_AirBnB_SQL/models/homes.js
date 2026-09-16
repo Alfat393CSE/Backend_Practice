@@ -8,7 +8,12 @@ module.exports = class Home {
     this.price = price;
     this.rating = rating;
   }
-  save() {}
+  save() {
+    return db.execute(
+      `INSERT INTO homes (houseName, image, price, rating) VALUES(?,?,?,?)`,
+      [this.houseName, this.image, this.price, this.rating],
+    );
+  }
 
   static fetchAll() {
     return db.execute("SELECT * FROM homes");
