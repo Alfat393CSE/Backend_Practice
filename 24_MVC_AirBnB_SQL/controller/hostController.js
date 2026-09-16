@@ -39,7 +39,6 @@ exports.getEditHome = (req, res, next) => {
       if (!home) {
         return res.redirect("/home-list");
       }
-      console.log(editing, homeId);
       res.render("../views/store/inputForm.ejs", {
         home: home,
         pageTitle: "Edit Home",

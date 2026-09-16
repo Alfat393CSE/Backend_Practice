@@ -9,10 +9,17 @@ module.exports = class Home {
     this.rating = rating;
   }
   save() {
-    return db.execute(
-      `INSERT INTO homes (houseName, image, price, rating) VALUES(?,?,?,?)`,
-      [this.houseName, this.image, this.price, this.rating],
-    );
+    if (this.id) {
+      return db.execute(
+        `UPDATE homes SET houseName=?, image=?, price=?, rating=? WHERE id = ?`,
+        [this.houseName, this.image, this.price, this.rating, this.id],
+      );
+    } else {
+      return db.execute(
+        `INSERT INTO homes (houseName, image, price, rating) VALUES(?,?,?,?)`,
+        [this.houseName, this.image, this.price, this.rating],
+      );
+    }
   }
 
   static fetchAll() {
