@@ -2,23 +2,31 @@ const Favourites = require("../models/favourties");
 const Home = require("../models/homes");
 
 exports.getHomePage = (req, res, next) => {
-  Home.fetchAll((registerHome) => {
-    res.render("../views/home/home-page.ejs", {
-      registerHome: registerHome,
-      pageTitle: "HomePage",
-      currentPage: "home",
+  Home.fetchAll()
+    .then(([rows, fields]) => {
+      res.render("../views/home/home-page.ejs", {
+        registerHome: rows,
+        pageTitle: "HomePage",
+        currentPage: "home",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  });
 };
 
 exports.getHomeList = (req, res, next) => {
-  Home.fetchAll((registerHome) => {
-    res.render("../views/store/home-list.ejs", {
-      registerHome: registerHome,
-      pageTitle: "Home List",
-      currentPage: "home-list",
+  Home.fetchAll()
+    .then(([rows, fields]) => {
+      res.render("../views/store/home-list.ejs", {
+        registerHome: rows,
+        pageTitle: "Home List",
+        currentPage: "home-list",
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  });
 };
 
 exports.getEditHome = (req, res, next) => {
@@ -53,16 +61,20 @@ exports.postEditHome = (req, res, next) => {
 
 exports.bookings = (req, res, next) => {
   Favourites.getFavourites((favourites) => {
-    Home.fetchAll((registerHome) => {
-      const bookedHomes = registerHome.filter((home) => {
-        return favourites.includes(home.id);
+    Home.fetchAll()
+      .then(([rows, fields]) => {
+        const bookedHomes = rows.filter((home) => {
+          return favourites.includes(home.id);
+        });
+        res.render("../views/store/booking.ejs", {
+          bookedHomes: bookedHomes,
+          pageTitle: "Bookings",
+          currentPage: "booking",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      res.render("../views/store/booking.ejs", {
-        bookedHomes: bookedHomes,
-        pageTitle: "Bookings",
-        currentPage: "booking",
-      });
-    });
   });
 };
 
@@ -80,7 +92,7 @@ exports.postDeleteHome = (req, res, next) => {
   Home.deleteByMyId(homeId, (err) => {
     if (err) {
       console.log(err);
-    } 
+    }
     res.redirect("/home-list");
   });
 };

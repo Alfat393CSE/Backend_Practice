@@ -5,15 +5,6 @@ const rootDir = require("./utils/pathUtils");
 const { host } = require("./routes/host");
 const { store } = require("./routes/store");
 const { pageNotFound } = require("./controller/errorController");
-const db = require("./utils/databaseUtils");
-
-db.execute("SELECT * FROM homes")
-  .then(([rows, fields]) => {
-    console.log(rows);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
 
 const app = express();
 app.use(express.urlencoded());
