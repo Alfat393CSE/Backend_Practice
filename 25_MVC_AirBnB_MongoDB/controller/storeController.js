@@ -28,7 +28,7 @@ exports.getFormOutput = (req, res, next) => {
 exports.homeDetailes = (req, res, next) => {
   const homeId = req.params.homeId;
   Home.findByMyId(homeId)
-    .then(([rows]) => {
+    .then((rows) => {
       const home = rows[0];
       if (!home) {
         console.log(`home not found`);

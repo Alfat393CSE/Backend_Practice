@@ -3,7 +3,7 @@ const Home = require("../models/homes");
 
 exports.getHomePage = (req, res, next) => {
   Home.fetchAll()
-    .then(([rows, fields]) => {
+    .then((rows) => {
       res.render("../views/home/home-page.ejs", {
         registerHome: rows,
         pageTitle: "HomePage",
@@ -17,7 +17,7 @@ exports.getHomePage = (req, res, next) => {
 
 exports.getHomeList = (req, res, next) => {
   Home.fetchAll()
-    .then(([rows, fields]) => {
+    .then((rows) => {
       res.render("../views/store/home-list.ejs", {
         registerHome: rows,
         pageTitle: "Home List",
@@ -34,7 +34,7 @@ exports.getEditHome = (req, res, next) => {
   const editing = req.query.editing === "true";
 
   Home.findByMyId(homeId)
-    .then(([rows]) => {
+    .then((rows) => {
       const home = rows[0];
       if (!home) {
         return res.redirect("/home-list");
@@ -71,7 +71,7 @@ exports.postEditHome = (req, res, next) => {
 exports.bookings = (req, res, next) => {
   Favourites.getFavourites((favourites) => {
     Home.fetchAll()
-      .then(([rows, fields]) => {
+      .then((rows) => {
         const bookedHomes = rows.filter((home) => {
           return favourites.includes(home.id);
         });
