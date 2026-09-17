@@ -11,12 +11,18 @@ module.exports = class Home {
   }
   save() {
     const db = database.getDB();
-    return db
-      .collection("homes")
-      .insertOne(this)
-      .then((res) => {
-        console.log(res);
-      });
+    if (this.id) {
+      return db
+        .collection("homes")
+        .updateOne({ _id: new ObjectId(String(this.id)) }, { $set: this });
+    } else {
+      return db
+        .collection("homes")
+        .insertOne(this)
+        .then((res) => {
+          console.log(res);
+        });
+    }
   }
 
   static fetchAll() {
@@ -47,5 +53,10 @@ module.exports = class Home {
       });
   }
 
-  static deleteByMyId(homeId) {}
+  static deleteByMyId(homeId) {
+    const db = database.getDB();
+    return db
+      .collection("homes")
+      .deleteOne({ _id: new ObjectId(String(homeId)) });
+  }
 };

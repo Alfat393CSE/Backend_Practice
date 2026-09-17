@@ -34,8 +34,7 @@ exports.getEditHome = (req, res, next) => {
   const editing = req.query.editing === "true";
 
   Home.findByMyId(homeId)
-    .then((rows) => {
-      const home = rows[0];
+    .then((home) => {
       if (!home) {
         return res.redirect("/home-list");
       }
@@ -54,7 +53,7 @@ exports.getEditHome = (req, res, next) => {
 exports.postEditHome = (req, res, next) => {
   const { id, houseName, price, image, rating } = req.body;
   const home = new Home(houseName, price, image, rating);
-  home._id = id;
+  home.id = id;
   home
     .save()
     .then(() => {
