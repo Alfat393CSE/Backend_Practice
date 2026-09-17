@@ -68,11 +68,12 @@ exports.postEditHome = (req, res, next) => {
 };
 
 exports.bookings = (req, res, next) => {
-  Favourites.getFavourites((favourites) => {
+  Favourites.getFavourites().then((favourites) => {
+    favourites = favourites.map((fav) => fav.homeId);
     Home.fetchAll()
       .then((rows) => {
         const bookedHomes = rows.filter((home) => {
-          return favourites.includes(home._id);
+          return favourites.includes(home._id.toString());
         });
         res.render("../views/store/booking.ejs", {
           bookedHomes: bookedHomes,
@@ -87,12 +88,18 @@ exports.bookings = (req, res, next) => {
 };
 
 exports.myBookings = (req, res, next) => {
-  Favourites.addToFavourite(req.body.id, (err) => {
-    if (err) {
+  const homeId = req.body.id;
+  console.log(homeId);
+
+  const booked = new Favourites(homeId);
+  booked
+    .addToFavourite()
+    .then(() => {
+      res.redirect("/bookings");
+    })
+    .catch((err) => {
       console.log(err);
-    }
-    res.redirect("/bookings");
-  });
+    });
 };
 
 exports.postDeleteHome = (req, res, next) => {
@@ -108,10 +115,11 @@ exports.postDeleteHome = (req, res, next) => {
 
 exports.deleteFavourite = (req, res, next) => {
   const homeId = req.params.homeId;
-  Favourites.deleteFavourite(homeId, (err) => {
-    if (err) {
+  Favourites.deleteFavourite(homeId)
+    .then(() => {
+      res.redirect("/bookings");
+    })
+    .catch((err) => {
       console.log(err);
-    }
-    res.redirect("/bookings");
-  });
+    });
 };

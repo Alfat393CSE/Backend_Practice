@@ -47,7 +47,7 @@
                       <a href="/user/<%= home._id %>" aria-label="View details for <%= home.houseName %>" class="flex w-full items-center justify-center rounded-xl border border-slate-700 bg-slate-800 px-3 py-3 text-center text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900">View Details</a>
                     <form action="/bookings" method="post">
                       <input type="hidden" name="id" value="<%= home._id %>" />
-                      <button type="submit" aria-label="Book <%= home.houseName %>" class="block w-full cursor-pointer rounded-xl bg-indigo-600 px-5 py-3 text-center text-sm font-semibold transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900">Book This Home</button>
+                      <button type="submit" class="block w-full cursor-pointer rounded-xl bg-indigo-600 px-5 py-3 text-center text-sm font-semibold transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900">Book This Home</button>
                     </form>
                   </div>
                 </div>
