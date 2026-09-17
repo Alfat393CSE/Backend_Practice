@@ -12,7 +12,17 @@ module.exports = class Favourites {
 
   addToFavourite() {
     const db = getDB();
-    return db.collection("bookings").insertOne(this);
+    return (
+      db.
+      collection("bookings")
+        .findOne({ homeId: this.homeId })
+        .then((existBook) => {
+          if (!existBook) {
+            return db.collection("bookings").insertOne(this);
+          }
+          return Promise.resolve();
+        })
+    );
   }
 
   static deleteFavourite(delHomeId) {
