@@ -54,7 +54,7 @@ exports.getEditHome = (req, res, next) => {
 exports.postEditHome = (req, res, next) => {
   const { id, houseName, price, image, rating } = req.body;
   const home = new Home(houseName, price, image, rating);
-  home.id = id;
+  home._id = id;
   home
     .save()
     .then(() => {
@@ -73,7 +73,7 @@ exports.bookings = (req, res, next) => {
     Home.fetchAll()
       .then((rows) => {
         const bookedHomes = rows.filter((home) => {
-          return favourites.includes(home.id);
+          return favourites.includes(home._id);
         });
         res.render("../views/store/booking.ejs", {
           bookedHomes: bookedHomes,

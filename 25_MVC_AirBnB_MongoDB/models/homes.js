@@ -1,5 +1,6 @@
 const Favourites = require("./favourties");
 const database = require("../utils/databaseUtils");
+const { ObjectId } = require("mongodb");
 
 module.exports = class Home {
   constructor(houseName, price, image, rating) {
@@ -32,7 +33,19 @@ module.exports = class Home {
       });
   }
 
-  static findByMyId(homeId) {}
+  static findByMyId(homeId) {
+    const db = database.getDB();
+    return db
+      .collection("homes")
+      .find({ _id: new ObjectId(String(homeId)) })
+      .next()
+      .then((home) => {
+        return home;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   static deleteByMyId(homeId) {}
 };

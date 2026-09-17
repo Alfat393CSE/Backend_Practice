@@ -28,7 +28,7 @@
 
         <form action="/user/<%= editing ? "edit-home": "output-home" %> " method="POST" class="space-y-6">
 
-          <input type="hidden" name="id" value="<%= home ? home.id : "" %>">
+          <input type="hidden" name="id" value="<%= home ? home._id : "" %>">
 
           <!-- House Name -->
           <div>
