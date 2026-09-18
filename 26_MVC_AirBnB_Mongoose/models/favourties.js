@@ -1,30 +1,13 @@
+const { default: mongoose } = require("mongoose");
+const { type } = require("node:os");
 
+const bookingSchema = new mongoose.Schema({
+  homeId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Home",
+    required: true,
+    unique: true,
+  },
+});
 
-module.exports = class Favourites {
-  constructor(homeId) {
-    this.homeId = homeId;
-  }
-
-  static fetchAll() {
-    const db = getDB();
-    return db.collection("bookings").find().toArray();
-  }
-
-  save() {
-    const db = getDB();
-    return db
-      .collection("bookings")
-      .findOne({ homeId: this.homeId })
-      .then((existBook) => {
-        if (!existBook) {
-          return db.collection("bookings").insertOne(this);
-        }
-        return Promise.resolve();
-      });
-  }
-
-  static deleteFavourite(delHomeId) {
-    const db = getDB();
-    return db.collection("bookings").deleteOne({ homeId: delHomeId });
-  }
-};
+module.exports = mongoose.model("Favourites", bookingSchema);

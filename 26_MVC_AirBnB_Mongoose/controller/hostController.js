@@ -74,32 +74,29 @@ exports.postEditHome = (req, res, next) => {
 };
 
 exports.bookings = (req, res, next) => {
-  Favourites.find().then((favourites) => {
-    favourites = favourites.map((fav) => fav.homeId);
-    Home.find()
-      .then((rows) => {
-        const bookedHomes = rows.filter((home) => {
-          return favourites.includes(home._id.toString());
-        });
-        res.render("../views/store/booking.ejs", {
-          bookedHomes: bookedHomes,
-          pageTitle: "Bookings",
-          currentPage: "booking",
-        });
-      })
-      .catch((err) => {
-        console.log(err);
+  Favourites.find()
+    .populate("homeId")
+    .then((favourites) => {
+      favourites = favourites.map((fav) => fav.homeId);
+      res.render("../views/store/booking.ejs", {
+        bookedHomes: favourites,
+        pageTitle: "Bookings",
+        currentPage: "booking",
       });
-  });
+    });
 };
 
 exports.myBookings = (req, res, next) => {
   const homeId = req.body.id;
-  console.log(homeId);
 
-  const booked = new Favourites(homeId);
-  booked
-    .save()
+  Favourites.findOne({ homeId: homeId })
+    .then((existing) => {
+      if (existing) {
+        return res.redirect("/bookings");
+      }
+      const booked = new Favourites({ homeId: homeId });
+      return booked.save();
+    })
     .then(() => {
       res.redirect("/bookings");
     })
@@ -121,7 +118,7 @@ exports.postDeleteHome = (req, res, next) => {
 
 exports.deleteFavourite = (req, res, next) => {
   const homeId = req.params.homeId;
-  Favourites.deleteFavourite(homeId)
+  Favourites.findOneAndDelete(homeId)
     .then(() => {
       res.redirect("/bookings");
     })
