@@ -1,0 +1,69 @@
+﻿<%- include("../partials/head.ejs") %>
+
+<body class="min-h-screen bg-slate-950 text-white">
+  <%- include("../partials/nav.ejs") %>
+
+  <main class="mx-auto max-w-6xl px-6 py-10 sm:py-14">
+    <section aria-labelledby="welcome-heading" class="mb-12 rounded-2xl border border-slate-800 bg-slate-900 px-6 py-12 text-center sm:px-12 sm:py-16">
+      <p class="text-sm font-medium uppercase tracking-widest text-indigo-400">Find your next stay</p>
+      <h1 id="welcome-heading" class="mx-auto mt-4 max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">A place to stay.<br /><span class="text-indigo-400">A space to feel at home.</span></h1>
+      <p class="mx-auto mt-5 max-w-xl text-base leading-7 text-slate-400">Discover comfortable homes for your next trip. Explore the listings and find a stay that feels right for you.</p>
+      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="#available-homes" class="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900">Explore Homes <span aria-hidden="true" class="ml-2">&#8595;</span></a>
+        <a href="/user/add-home" class="inline-flex items-center justify-center rounded-xl border border-slate-700 bg-slate-800 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900">Add Your Home</a>
+      </div>
+    </section>
+
+    <section id="available-homes" aria-labelledby="homes-heading" class="scroll-mt-6">
+      <header class="mb-6 flex flex-col gap-4 border-b border-slate-800 pb-6 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="text-sm font-medium uppercase tracking-widest text-indigo-400">Explore</p>
+          <h2 id="homes-heading" class="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">Available Homes</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-400">Take a look around. Your next stay starts here.</p>
+        </div>
+        <a href="/home-list" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-800 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-950">View All Homes <span aria-hidden="true">&#8594;</span></a>
+      </header>
+
+      <% if (registerHome.length > 0) { %>
+        <p class="mb-5 text-sm text-slate-400"><span class="font-semibold text-slate-200"><%= registerHome.length %></span> <%= registerHome.length === 1 ? 'home' : 'homes' %> available</p>
+        <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <% registerHome.forEach((home) => { %>
+            <li class="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-lg shadow-black/10 transition-colors hover:border-slate-600">
+              <div class="relative h-52 shrink-0 overflow-hidden bg-slate-800">
+                <img src="<%= home.image %>" alt="<%= home.houseName %>" loading="lazy" decoding="async" class="h-full w-full object-cover" />
+                <span class="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-slate-950/90 px-3 py-1.5 text-sm font-medium" aria-label="Rating: <%= home.rating %> out of 5">
+                  <span aria-hidden="true" class="text-amber-400">&#9733;</span> <%= home.rating %>
+                </span>
+              </div>
+              <div class="flex flex-1 flex-col p-5">
+                <h3 class="break-words text-lg font-semibold leading-7"><%= home.houseName %></h3>
+                <p class="mt-1 text-sm text-slate-400">Comfortable stay</p>
+                <p class="mt-5 flex flex-wrap items-baseline gap-1.5">
+                  <span class="break-all text-2xl font-bold tracking-tight">$<%= home.price %></span>
+                  <span class="text-sm text-slate-400">/ night</span>
+                </p>
+                <div class="mt-auto pt-5">
+                  <div class="space-y-3 border-t border-slate-800 pt-5">
+                      <a href="/user/<%= home._id %>" aria-label="View details for <%= home.houseName %>" class="flex w-full items-center justify-center rounded-xl border border-slate-700 bg-slate-800 px-3 py-3 text-center text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900">View Details</a>
+                    <form action="/bookings" method="post">
+                      <input type="hidden" name="id" value="<%= home._id %>" />
+                      <button type="submit" class="block w-full cursor-pointer rounded-xl bg-indigo-600 px-5 py-3 text-center text-sm font-semibold transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900">Book This Home</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <div class="rounded-2xl border border-dashed border-slate-700 bg-slate-900 px-6 py-16 text-center">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mx-auto mb-5 h-10 w-10 text-indigo-400"><path stroke-linecap="round" stroke-linejoin="round" d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-8h6v8" /></svg>
+          <h2 class="text-xl font-semibold">No homes added yet</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-400">Add your first property to see it listed here.</p>
+          <a href="/user/add-home" class="mt-6 inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold transition hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-slate-900">Add Your First Home</a>
+        </div>
+      <% } %>
+    </section>
+  </main>
+</body>
+</html>
