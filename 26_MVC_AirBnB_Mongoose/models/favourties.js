@@ -1,28 +1,26 @@
-const { getDB } = require("../utils/databaseUtils");
+
 
 module.exports = class Favourites {
   constructor(homeId) {
     this.homeId = homeId;
   }
 
-  static getFavourites() {
+  static fetchAll() {
     const db = getDB();
     return db.collection("bookings").find().toArray();
   }
 
-  addToFavourite() {
+  save() {
     const db = getDB();
-    return (
-      db.
-      collection("bookings")
-        .findOne({ homeId: this.homeId })
-        .then((existBook) => {
-          if (!existBook) {
-            return db.collection("bookings").insertOne(this);
-          }
-          return Promise.resolve();
-        })
-    );
+    return db
+      .collection("bookings")
+      .findOne({ homeId: this.homeId })
+      .then((existBook) => {
+        if (!existBook) {
+          return db.collection("bookings").insertOne(this);
+        }
+        return Promise.resolve();
+      });
   }
 
   static deleteFavourite(delHomeId) {

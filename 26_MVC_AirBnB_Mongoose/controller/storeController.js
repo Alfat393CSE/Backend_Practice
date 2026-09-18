@@ -11,7 +11,7 @@ exports.getForm = (req, res, next) => {
 
 exports.getFormOutput = (req, res, next) => {
   const { houseName, price, image, rating } = req.body;
-  const home = new Home(houseName, price, image, rating);
+  const home = new Home({ houseName, price, image, rating });
   home
     .save()
     .then(() => {
@@ -27,7 +27,7 @@ exports.getFormOutput = (req, res, next) => {
 
 exports.homeDetailes = (req, res, next) => {
   const homeId = req.params.homeId;
-  Home.findByMyId(homeId)
+  Home.findById(homeId)
     .then((home) => {
       if (!home) {
         console.log(`home not found`);

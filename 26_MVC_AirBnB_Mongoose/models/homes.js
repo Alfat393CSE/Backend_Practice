@@ -1,62 +1,11 @@
-const Favourites = require("./favourties");
-const database = require("../utils/databaseUtils");
-const { ObjectId } = require("mongodb");
+const { default: mongoose, model } = require("mongoose");
+const { type } = require("node:os");
 
-module.exports = class Home {
-  constructor(houseName, price, image, rating) {
-    this.houseName = houseName;
-    this.image = image;
-    this.price = price;
-    this.rating = rating;
-  }
-  save() {
-    const db = database.getDB();
-    if (this.id) {
-      return db
-        .collection("homes")
-        .updateOne({ _id: new ObjectId(String(this.id)) }, { $set: this });
-    } else {
-      return db
-        .collection("homes")
-        .insertOne(this)
-        .then((res) => {
-          console.log(res);
-        });
-    }
-  }
+const homeSchema = new mongoose.Schema({
+  houseName: { type: String, required: true },
+  image: String,
+  price: { type: String, required: true },
+  rating: { type: String, required: true },
+});
 
-  static fetchAll() {
-    const db = database.getDB();
-    return db
-      .collection("homes")
-      .find()
-      .toArray()
-      .then((homes) => {
-        return homes;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  static findByMyId(homeId) {
-    const db = database.getDB();
-    return db
-      .collection("homes")
-      .find({ _id: new ObjectId(String(homeId)) })
-      .next()
-      .then((home) => {
-        return home;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  static deleteByMyId(homeId) {
-    const db = database.getDB();
-    return db
-      .collection("homes")
-      .deleteOne({ _id: new ObjectId(String(homeId)) });
-  }
-};
+module.exports = mongoose.model("Home", homeSchema);

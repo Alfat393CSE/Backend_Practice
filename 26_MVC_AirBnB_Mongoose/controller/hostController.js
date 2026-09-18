@@ -2,7 +2,7 @@ const Favourites = require("../models/favourties");
 const Home = require("../models/homes");
 
 exports.getHomePage = (req, res, next) => {
-  Home.fetchAll()
+  Home.find()
     .then((rows) => {
       res.render("../views/home/home-page.ejs", {
         registerHome: rows,
@@ -16,7 +16,7 @@ exports.getHomePage = (req, res, next) => {
 };
 
 exports.getHomeList = (req, res, next) => {
-  Home.fetchAll()
+  Home.find()
     .then((rows) => {
       res.render("../views/store/home-list.ejs", {
         registerHome: rows,
@@ -33,7 +33,7 @@ exports.getEditHome = (req, res, next) => {
   const homeId = req.params.homeId;
   const editing = req.query.editing === "true";
 
-  Home.findByMyId(homeId)
+  Home.findById(homeId)
     .then((home) => {
       if (!home) {
         return res.redirect("/home-list");
@@ -68,9 +68,9 @@ exports.postEditHome = (req, res, next) => {
 };
 
 exports.bookings = (req, res, next) => {
-  Favourites.getFavourites().then((favourites) => {
+  Favourites.find().then((favourites) => {
     favourites = favourites.map((fav) => fav.homeId);
-    Home.fetchAll()
+    Home.find()
       .then((rows) => {
         const bookedHomes = rows.filter((home) => {
           return favourites.includes(home._id.toString());
@@ -93,7 +93,7 @@ exports.myBookings = (req, res, next) => {
 
   const booked = new Favourites(homeId);
   booked
-    .addToFavourite()
+    .save()
     .then(() => {
       res.redirect("/bookings");
     })
