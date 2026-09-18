@@ -110,7 +110,7 @@ exports.myBookings = (req, res, next) => {
 
 exports.postDeleteHome = (req, res, next) => {
   const homeId = req.params.homeId;
-  Home.deleteByMyId(homeId)
+  Home.findByIdAndDelete(homeId)
     .then(() => {
       res.redirect("/home-list");
     })
