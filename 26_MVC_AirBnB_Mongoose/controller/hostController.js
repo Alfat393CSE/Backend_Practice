@@ -52,15 +52,21 @@ exports.getEditHome = (req, res, next) => {
 
 exports.postEditHome = (req, res, next) => {
   const { id, houseName, price, image, rating } = req.body;
-  const home = new Home(houseName, price, image, rating);
-  home.id = id;
-  home
-    .save()
+
+  Home.findById(id)
+    .then((home) => {
+      if (!home) {
+        console.log(`home editing mode unsuccessful`);
+        return res.redirect("/home-list");
+      }
+      home.houseName = houseName;
+      home.price = price;
+      home.image = image;
+      home.rating = rating;
+      return home.save();
+    })
     .then(() => {
-      res.render("../views/store/outputForm", {
-        pageTitle: "Add Homes",
-        currentPage: "outputForm",
-      });
+      res.redirect("/home-list");
     })
     .catch((err) => {
       console.log(err);
