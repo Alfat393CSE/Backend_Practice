@@ -27,12 +27,22 @@
         Bookings
       </a>
       <% } %>
+      
+      <% if (!isLoggedIn) { %>
       <a
         href="/login"
         class="text-sm text-slate-300 transition hover:text-white"
       >
         Login
       </a>
+      <% } else { %>
+        <form action="/logout" method="post">
+          <button class="text-sm text-slate-300 transition hover:text-white">
+        Logout
+      </button>
+        </form>
+        
+      <% } %>
     </div>
   </div>
 </nav>
