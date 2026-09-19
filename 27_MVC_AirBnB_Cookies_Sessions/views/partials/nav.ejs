@@ -6,6 +6,7 @@
       <a href="/" class="text-sm text-slate-300 transition hover:text-white">
         Home
       </a>
+      <% if (isLoggedIn) { %>
       <a
         href="/home-list"
         class="text-sm text-slate-300 transition hover:text-white"
@@ -25,7 +26,7 @@
       >
         Bookings
       </a>
-
+      <% } %>
       <a
         href="/login"
         class="text-sm text-slate-300 transition hover:text-white"

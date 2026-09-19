@@ -6,6 +6,7 @@ exports.getForm = (req, res, next) => {
     currentPage: "inputForm",
     editing: false,
     home: null,
+    isLoggedIn: req.isLoggedIn,
   });
 };
 
@@ -18,6 +19,7 @@ exports.getFormOutput = (req, res, next) => {
       res.render("../views/store/outputForm", {
         pageTitle: "Add Homes",
         currentPage: "outputForm",
+        isLoggedIn: req.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -38,6 +40,7 @@ exports.homeDetailes = (req, res, next) => {
           home: home,
           pageTitle: "Home Detailes",
           currentPage: "home-detailes",
+          isLoggedIn: req.isLoggedIn,
         });
       }
     })

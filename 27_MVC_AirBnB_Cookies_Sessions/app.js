@@ -18,7 +18,13 @@ app.set("views", "views");
 
 app.use(host);
 app.use("/user", store);
-app.use(authRouter)
+app.use("user", (req, res, next) => {
+  if (!req.isLoggedIn) {
+    return res.redirect("/login");
+  }
+  next();
+});
+app.use(authRouter);
 app.use(pageNotFound);
 
 const PORT = 3000;
