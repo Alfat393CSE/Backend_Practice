@@ -8,7 +8,7 @@ exports.getHomePage = (req, res, next) => {
         registerHome: rows,
         pageTitle: "HomePage",
         currentPage: "home",
-        isLoggedIn: false,
+        isLoggedIn: req.isLoggedIn,
       });
     })
     .catch((err) => {

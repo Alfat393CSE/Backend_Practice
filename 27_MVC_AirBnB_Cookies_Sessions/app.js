@@ -17,7 +17,7 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 
 app.use((req, res, next) => {
-  req.isLoggedIn = req.get("Cookie")?.split("=")[1] || false;
+  req.isLoggedIn = req.get("Cookie") ? req.get("Cookie").split("=")[1] === "true" : false;
   console.log(req.isLoggedIn);
   next();
 });
