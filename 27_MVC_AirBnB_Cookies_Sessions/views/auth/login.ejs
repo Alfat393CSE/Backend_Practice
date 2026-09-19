@@ -1,0 +1,71 @@
+<%- include("../partials/head.ejs") %>
+
+<body class="min-h-screen bg-slate-950 text-white">
+  <%- include("../partials/nav.ejs") %>
+
+  <!-- Form Section -->
+  <main class="mx-auto max-w-2xl px-6 py-12">
+    <div class="mb-8 text-center">
+      <p class="text-sm font-medium uppercase tracking-widest text-slate-400">
+        Property Listing
+      </p>
+
+      <h1 class="mt-3 text-3xl font-bold">Login Page</h1>
+
+      <p class="mt-2 text-slate-400">Enter your details.</p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6 sm:p-8">
+      <form action="/login" method="POST" class="space-y-6">
+        <input type="hidden" name="id" />
+
+        <!-- House Name -->
+        <div>
+          <label
+            for="username"
+            class="mb-2 block text-sm font-medium text-slate-200"
+          >
+            User Name
+          </label>
+
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter user name"
+            required
+            class="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 outline-none transition focus:border-slate-500"
+          />
+        </div>
+
+        <!-- Price -->
+        <div>
+          <label
+            for="password"
+            class="mb-2 block text-sm font-medium text-slate-200"
+          >
+            Password
+          </label>
+
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter password"
+            required
+            class="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 outline-none transition focus:border-slate-500"
+          />
+        </div>
+
+        <!-- Submit -->
+        <input
+          type="submit"
+          value="Login"
+          class="w-full rounded-lg bg-white px-5 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-200"
+        />
+      </form>
+    </div>
+  </main>
+</body>
+</html>
