@@ -9,7 +9,7 @@ exports.getHomePage = (req, res, next) => {
         registerHome: rows,
         pageTitle: "HomePage",
         currentPage: "home",
-        isLoggedIn: req.isLoggedIn,
+        isLoggedIn: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -24,7 +24,7 @@ exports.getHomeList = (req, res, next) => {
         registerHome: rows,
         pageTitle: "Home List",
         currentPage: "home-list",
-        isLoggedIn: req.isLoggedIn,
+        isLoggedIn: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -46,7 +46,7 @@ exports.getEditHome = (req, res, next) => {
         pageTitle: "Edit Home",
         currentPage: "edit-home",
         editing: editing,
-        isLoggedIn: req.isLoggedIn,
+        isLoggedIn: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -86,7 +86,7 @@ exports.bookings = (req, res, next) => {
         bookedHomes: favourites,
         pageTitle: "Bookings",
         currentPage: "booking",
-        isLoggedIn: req.isLoggedIn,
+        isLoggedIn: req.session.isLoggedIn,
       });
     });
 };

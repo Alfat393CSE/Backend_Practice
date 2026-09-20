@@ -31,17 +31,17 @@ app.use(
   }),
 );
 
-app.use((req, res, next) => {
-  req.isLoggedIn = req.session.isLoggedIn;
-  next();
-});
+// app.use((req, res, next) => {
+//   req.session.isLoggedIn = req.session.isLoggedIn;
+//   next();
+// });
 
 app.use(express.static(path.join(rootDir, "public")));
 
 
 app.use(host);
 app.use("/user", (req, res, next) => {
-  if (!req.isLoggedIn) {
+  if (!req.session.isLoggedIn) {
     return res.redirect("/login");
   }
   next();
