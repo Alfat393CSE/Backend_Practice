@@ -2,6 +2,7 @@ const Favourites = require("../models/favourties");
 const Home = require("../models/homes");
 
 exports.getHomePage = (req, res, next) => {
+  console.log(req.session, req.session.isLoggedIn);
   Home.find()
     .then((rows) => {
       res.render("../views/home/home-page.ejs", {

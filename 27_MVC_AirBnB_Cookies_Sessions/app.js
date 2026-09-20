@@ -8,16 +8,26 @@ const { authRouter } = require("./routes/authRouter");
 const { pageNotFound } = require("./controller/errorController");
 const { default: mongoose } = require("mongoose");
 const { MONGO_URI } = require("./utils/databaseUtils");
+const session = require("express-session");
 
 const app = express();
 app.use(express.urlencoded());
+app.use(
+  session({
+    secret: "Alfat Tasnim Hasan",
+    resave: false,
+    saveUninitialized: true,
+  }),
+);
 app.use(express.static(path.join(rootDir, "public")));
 
 app.set("view engine", "ejs");
 app.set("views", "views");
 
 app.use((req, res, next) => {
-  req.isLoggedIn = req.get("Cookie") ? req.get("Cookie").split("=")[1] === "true" : false;
+  req.isLoggedIn = req.get("Cookie")
+    ? req.get("Cookie").split("=")[1] === "true"
+    : false;
   console.log(req.isLoggedIn);
   next();
 });
