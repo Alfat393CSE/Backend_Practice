@@ -9,37 +9,44 @@ const { pageNotFound } = require("./controller/errorController");
 const { default: mongoose } = require("mongoose");
 const { MONGO_URI } = require("./utils/databaseUtils");
 const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
 
 const app = express();
+
+app.set("view engine", "ejs");
+app.set("views", "views");
+
 app.use(express.urlencoded());
+const stores = new MongoDBStore({
+  uri: MONGO_URI,
+  collection: "sessions",
+});
+
 app.use(
   session({
     secret: "Alfat Tasnim Hasan",
     resave: false,
     saveUninitialized: true,
+    store: stores,
   }),
 );
-app.use(express.static(path.join(rootDir, "public")));
-
-app.set("view engine", "ejs");
-app.set("views", "views");
 
 app.use((req, res, next) => {
-  req.isLoggedIn = req.get("Cookie")
-    ? req.get("Cookie").split("=")[1] === "true"
-    : false;
-  console.log(req.isLoggedIn);
+  req.isLoggedIn = req.session.isLoggedIn;
   next();
 });
 
+app.use(express.static(path.join(rootDir, "public")));
+
+
 app.use(host);
-app.use("/user", store);
 app.use("/user", (req, res, next) => {
   if (!req.isLoggedIn) {
     return res.redirect("/login");
   }
   next();
 });
+app.use("/user", store);
 
 app.use(authRouter);
 app.use(pageNotFound);
