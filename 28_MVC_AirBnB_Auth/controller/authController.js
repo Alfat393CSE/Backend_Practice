@@ -1,10 +1,13 @@
 const { check, validationResult } = require("express-validator");
+const User = require("../models/user");
 
 exports.getLogin = (req, res, next) => {
   res.render("../views/auth/login.ejs", {
     pageTitle: "Login Page",
     currentPage: "login",
     isLoggedIn: req.session.isLoggedIn,
+    errorMessages: [],
+    oldInput: {},
   });
 };
 
@@ -77,7 +80,7 @@ exports.postSignUp = [
     }),
 
   (req, res, next) => {
-    const { firstName, lastName, email, passowrd, userType } = req.body;
+    const { firstName, lastName, email, password, userType } = req.body;
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -95,6 +98,23 @@ exports.postSignUp = [
         },
       });
     }
+
+    const user = new User({
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      userType: userType,
+    });
+
+    user
+      .save()
+      .then(() => {
+        res.redirect("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 ];
 
