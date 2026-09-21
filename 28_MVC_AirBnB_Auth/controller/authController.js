@@ -1,6 +1,7 @@
 const { check, validationResult } = require("express-validator");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
+const user = require("../models/user");
 
 exports.getLogin = (req, res, next) => {
   res.render("../views/auth/login.ejs", {
@@ -35,12 +36,24 @@ exports.postLogin = async (req, res, next) => {
         errorMessages: "invalid email",
       });
     }
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.render("../views/auth/login.ejs", {
+        pageTitle: "Login Page",
+        currentPage: "login",
+        isLoggedIn: false,
+        errorMessages: "invalid password",
+      });
+    }
+
+    req.session.isLoggedIn = true;
+    req.session.user = user;
+    await req.session.save();
+    res.redirect("/");
   } catch (err) {
     console.log(err);
   }
-
-  req.session.isLoggedIn = true;
-  res.redirect("/");
 };
 
 exports.postSignUp = [
