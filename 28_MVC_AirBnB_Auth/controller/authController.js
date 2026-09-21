@@ -1,6 +1,6 @@
 const { check, validationResult } = require("express-validator");
 const User = require("../models/user");
-const bcrypt  = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 
 exports.getLogin = (req, res, next) => {
   res.render("../views/auth/login.ejs", {
@@ -22,7 +22,23 @@ exports.getSignUp = (req, res, next) => {
   });
 };
 
-exports.postLogin = (req, res, next) => {
+exports.postLogin = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.render("../views/auth/login.ejs", {
+        pageTitle: "Login Page",
+        currentPage: "login",
+        isLoggedIn: false,
+        errorMessages: "invalid email",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+
   req.session.isLoggedIn = true;
   res.redirect("/");
 };
