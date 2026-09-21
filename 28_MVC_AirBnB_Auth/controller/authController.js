@@ -47,8 +47,13 @@ exports.postLogin = async (req, res, next) => {
       });
     }
 
+    req.session.user = {
+      _id: user._id.toString(),
+      firstName: user.firstName,
+      userType: user.userType,
+    };
+    
     req.session.isLoggedIn = true;
-    req.session.user = user;
     await req.session.save();
     res.redirect("/");
   } catch (err) {
