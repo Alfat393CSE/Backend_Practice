@@ -7,9 +7,10 @@ exports.getLogin = (req, res, next) => {
   res.render("../views/auth/login.ejs", {
     pageTitle: "Login Page",
     currentPage: "login",
-    isLoggedIn: req.session.isLoggedIn,
     errorMessages: [],
     oldInput: {},
+    isLoggedIn: req.session.isLoggedIn,
+    user: req.session.user,
   });
 };
 
@@ -17,7 +18,8 @@ exports.getSignUp = (req, res, next) => {
   res.render("../views/auth/signup.ejs", {
     pageTitle: "SignUp Page",
     currentPage: "signup",
-    isLoggedIn: req.session.isLoggedIn,
+    isLoggedIn: false,
+    user: req.session.user,
     errorMessages: [],
     oldInput: {},
   });
@@ -33,6 +35,7 @@ exports.postLogin = async (req, res, next) => {
         pageTitle: "Login Page",
         currentPage: "login",
         isLoggedIn: false,
+        user: req.session.user,
         errorMessages: "invalid email",
       });
     }
@@ -43,6 +46,7 @@ exports.postLogin = async (req, res, next) => {
         pageTitle: "Login Page",
         currentPage: "login",
         isLoggedIn: false,
+        user: req.session.user,
         errorMessages: "invalid password",
       });
     }
@@ -52,7 +56,7 @@ exports.postLogin = async (req, res, next) => {
       firstName: user.firstName,
       userType: user.userType,
     };
-    
+
     req.session.isLoggedIn = true;
     await req.session.save();
     res.redirect("/");
@@ -123,6 +127,7 @@ exports.postSignUp = [
         pageTitle: "Sign Up",
         currentPage: "signup",
         isLoggedIn: false,
+        user: req.session.user,
         errorMessages: errors.array().map((err) => err.msg),
         oldInput: {
           firstName,

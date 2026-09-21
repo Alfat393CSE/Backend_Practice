@@ -7,6 +7,7 @@ exports.getForm = (req, res, next) => {
     editing: false,
     home: null,
     isLoggedIn: req.session.isLoggedIn,
+    user: req.session.user,
   });
 };
 
@@ -20,6 +21,7 @@ exports.getFormOutput = (req, res, next) => {
         pageTitle: "Add Homes",
         currentPage: "outputForm",
         isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user,
       });
     })
     .catch((err) => {
@@ -41,6 +43,7 @@ exports.homeDetailes = (req, res, next) => {
           pageTitle: "Home Detailes",
           currentPage: "home-detailes",
           isLoggedIn: req.session.isLoggedIn,
+          user: req.session.user,
         });
       }
     })

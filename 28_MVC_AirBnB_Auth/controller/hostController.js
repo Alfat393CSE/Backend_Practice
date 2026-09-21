@@ -10,6 +10,7 @@ exports.getHomePage = (req, res, next) => {
         pageTitle: "HomePage",
         currentPage: "home",
         isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user,
       });
     })
     .catch((err) => {
@@ -25,6 +26,7 @@ exports.getHomeList = (req, res, next) => {
         pageTitle: "Home List",
         currentPage: "home-list",
         isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user,
       });
     })
     .catch((err) => {
@@ -47,6 +49,7 @@ exports.getEditHome = (req, res, next) => {
         currentPage: "edit-home",
         editing: editing,
         isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user,
       });
     })
     .catch((err) => {
@@ -87,6 +90,7 @@ exports.bookings = (req, res, next) => {
         pageTitle: "Bookings",
         currentPage: "booking",
         isLoggedIn: req.session.isLoggedIn,
+        user: req.session.user,
       });
     });
 };
