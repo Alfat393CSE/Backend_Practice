@@ -27,6 +27,14 @@
     >
       <form action="/signup" method="POST" class="space-y-6">
         <!-- Name Fields -->
+         <% if (typeof errorMessages !== 'undefined' && errorMessages && errorMessages.length > 0) %>
+         <div>
+          <ul>
+            <% errorMessages.forEach(err => { %>
+              <li><%= err %></li>
+           <% }) %>
+          </ul>
+         </div>
         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <!-- First Name -->
           <div>
@@ -41,6 +49,7 @@
               type="text"
               id="firstName"
               name="firstName"
+              value="<%= typeof oldInput !== 'undefined' ? oldInput.firstName:'' %>"
               placeholder="Enter first name"
               required
               class="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 outline-none transition focus:border-white focus:ring-1 focus:ring-white"
@@ -61,6 +70,7 @@
               id="lastName"
               name="lastName"
               placeholder="Enter last name"
+              value="<%= typeof oldInput !== 'undefined' ? oldInput.lastName:'' %>"
               required
               class="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 outline-none transition focus:border-white focus:ring-1 focus:ring-white"
             />
@@ -81,6 +91,7 @@
             id="email"
             name="email"
             placeholder="Enter your email"
+            value="<%= typeof oldInput !== 'undefined' ? oldInput.email:'' %>"
             required
             class="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white placeholder-slate-500 outline-none transition focus:border-white focus:ring-1 focus:ring-white"
           />
@@ -138,7 +149,7 @@
               <input
                 type="radio"
                 name="userType"
-                value="guest"
+                value="guest" <%=  oldInput?.userType === 'guest' ? 'checked':'' %>
                 required
                 class="h-4 w-4 accent-white"
               />
@@ -157,7 +168,7 @@
               <input
                 type="radio"
                 name="userType"
-                value="host"
+                value="host" <%=  oldInput?.userType === 'host' ? 'checked':'' %>
                 required
                 class="h-4 w-4 accent-white"
               />
