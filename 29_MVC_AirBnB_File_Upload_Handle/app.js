@@ -17,6 +17,14 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", "views");
 
+const fileFilter = (req, file, cb) => {
+  if (["image/jpeg", "image/png", "image/jpg"].includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -30,7 +38,7 @@ const storage = multer.diskStorage({
 });
 
 app.use(express.urlencoded());
-app.use(multer({ storage }).single("image"));
+app.use(multer({ storage, fileFilter }).single("image"));
 app.use(express.static(path.join(rootDir, "public")));
 
 const stores = new MongoDBStore({

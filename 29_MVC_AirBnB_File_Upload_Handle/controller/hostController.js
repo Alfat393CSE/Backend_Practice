@@ -57,7 +57,13 @@ exports.getEditHome = (req, res, next) => {
 };
 
 exports.postEditHome = (req, res, next) => {
-  const { id, houseName, price, image, rating } = req.body;
+  const { id, houseName, price, rating } = req.body;
+
+  if (!req.file) {
+    return res.status(400).send("no image provided");
+  }
+
+  const image = req.file.path;
 
   Home.findById(id)
     .then((home) => {

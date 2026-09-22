@@ -12,9 +12,14 @@ exports.getForm = (req, res, next) => {
 };
 
 exports.getFormOutput = (req, res, next) => {
-  const { houseName, price, image, rating } = req.body;
+  const { houseName, price, rating } = req.body;
   console.log(req.file);
-  
+
+  if (!req.file) {
+    return res.status(400).send("no image provided");
+  }
+
+  const image = req.file.path;
   const home = new Home({ houseName, price, image, rating });
   home
     .save()
