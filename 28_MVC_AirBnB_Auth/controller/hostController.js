@@ -1,4 +1,4 @@
-const Favourites = require("../models/favourties");
+const User = require("../models/user");
 const Home = require("../models/homes");
 
 exports.getHomePage = (req, res, next) => {
@@ -81,12 +81,12 @@ exports.postEditHome = (req, res, next) => {
 };
 
 exports.bookings = (req, res, next) => {
-  Favourites.find()
-    .populate("homeId")
-    .then((favourites) => {
-      favourites = favourites.map((fav) => fav.homeId);
+  const userId = req.session.user._id;
+  User.findById(userId)
+    .populate("bookedHomes")
+    .then((user) => {
       res.render("../views/store/booking.ejs", {
-        bookedHomes: favourites,
+        bookedHomes: user.bookedHomes,
         pageTitle: "Bookings",
         currentPage: "booking",
         isLoggedIn: req.session.isLoggedIn,
@@ -97,20 +97,22 @@ exports.bookings = (req, res, next) => {
 
 exports.myBookings = (req, res, next) => {
   const homeId = req.body.id;
+  const userId = req.session.user._id;
 
-  Favourites.findOne({ homeId: homeId })
-    .then((existing) => {
-      if (existing) {
-        return res.redirect("/bookings");
+  User.findById(userId)
+    .then((user) => {
+      if (!user.bookedHomes.includes(homeId)) {
+        user.bookedHomes.push(homeId);
+        return user.save();
       }
-      const booked = new Favourites({ homeId: homeId });
-      return booked.save();
+      return user;
     })
     .then(() => {
       res.redirect("/bookings");
     })
     .catch((err) => {
       console.log(err);
+      res.redirect("/bookings");
     });
 };
 
@@ -127,11 +129,20 @@ exports.postDeleteHome = (req, res, next) => {
 
 exports.deleteFavourite = (req, res, next) => {
   const homeId = req.params.homeId;
-  Favourites.findOneAndDelete(homeId)
+  const userId = req.session.user._id;
+
+  User.findById(userId)
+    .then((user) => {
+      user.bookedHomes = user.bookedHomes.filter(
+        (id) => id.toString() !== homeId,
+      );
+      return user.save();
+    })
     .then(() => {
       res.redirect("/bookings");
     })
     .catch((err) => {
       console.log(err);
+      res.redirect("/bookings");
     });
 };

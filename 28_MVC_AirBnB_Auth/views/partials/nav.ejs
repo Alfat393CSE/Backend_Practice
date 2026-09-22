@@ -7,14 +7,7 @@
         Home
       </a>
       <% if (isLoggedIn) { %>
-      <% if (user.userType==='guest') { %>
-      <a
-        href="/home-list"
-        class="text-sm text-slate-300 transition hover:text-white"
-      >
-        Home List
-      </a>
-      
+      <% if (user.userType==='guest') { %>      
       <a
       href="/bookings"
       class="text-sm text-slate-300 transition hover:text-white"
@@ -22,6 +15,12 @@
       Bookings
     </a>
     <% } else { %>
+      <a
+        href="/home-list"
+        class="text-sm text-slate-300 transition hover:text-white"
+      >
+        Home List
+      </a>
     <a
       href="/user/add-home"
       class="text-sm text-slate-300 transition hover:text-white"

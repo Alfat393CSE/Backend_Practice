@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     enum: ["guest", "host"],
   },
+  bookedHomes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Home",
+  }],
 });
 
 module.exports = mongoose.model("User", userSchema);
