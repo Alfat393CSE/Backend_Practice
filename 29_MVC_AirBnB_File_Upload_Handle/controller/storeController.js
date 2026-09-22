@@ -13,7 +13,7 @@ exports.getForm = (req, res, next) => {
 
 exports.getFormOutput = (req, res, next) => {
   const { houseName, price, image, rating } = req.body;
-  console.log(req.body);
+  console.log(req.file);
   
   const home = new Home({ houseName, price, image, rating });
   home

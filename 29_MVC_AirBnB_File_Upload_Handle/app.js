@@ -10,6 +10,7 @@ const { default: mongoose } = require("mongoose");
 const { MONGO_URI } = require("./utils/databaseUtils");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+const multer = require("multer");
 
 const app = express();
 
@@ -17,6 +18,9 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 
 app.use(express.urlencoded());
+app.use(multer().single("image"));
+app.use(express.static(path.join(rootDir, "public")));
+
 const stores = new MongoDBStore({
   uri: MONGO_URI,
   collection: "sessions",
@@ -30,14 +34,6 @@ app.use(
     store: stores,
   }),
 );
-
-// app.use((req, res, next) => {
-//   req.session.isLoggedIn = req.session.isLoggedIn;
-//   next();
-// });
-
-app.use(express.static(path.join(rootDir, "public")));
-
 
 app.use(host);
 app.use("/user", (req, res, next) => {
