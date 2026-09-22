@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const Home = require("../models/homes");
+const { deleteFile } = require("../utils/file");
 
 exports.getHomePage = (req, res, next) => {
   Home.find()
@@ -59,12 +60,6 @@ exports.getEditHome = (req, res, next) => {
 exports.postEditHome = (req, res, next) => {
   const { id, houseName, price, rating } = req.body;
 
-  if (!req.file) {
-    return res.status(400).send("no image provided");
-  }
-
-  const image = req.file.path;
-
   Home.findById(id)
     .then((home) => {
       if (!home) {
@@ -73,7 +68,10 @@ exports.postEditHome = (req, res, next) => {
       }
       home.houseName = houseName;
       home.price = price;
-      home.image = image;
+      if (req.file) {
+        deleteFile(home.image);
+        home.image = req.file.path;
+      }
       home.rating = rating;
       return home.save();
     })
