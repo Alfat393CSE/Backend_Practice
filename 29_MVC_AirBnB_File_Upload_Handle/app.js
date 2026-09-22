@@ -40,6 +40,7 @@ const storage = multer.diskStorage({
 app.use(express.urlencoded());
 app.use(multer({ storage, fileFilter }).single("image"));
 app.use(express.static(path.join(rootDir, "public")));
+app.use("/uploads",express.static(path.join(rootDir, "uploads")));
 
 const stores = new MongoDBStore({
   uri: MONGO_URI,
