@@ -40,7 +40,7 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   const { unHashedToken, hashedToken, tokenExpiry } =
-    user.generateTemporaryToken;
+    user.generateTemporaryToken();
 
   user.emailVerificationToken = hashedToken;
   user.emailVerificationExpiry = tokenExpiry;
@@ -56,7 +56,7 @@ const registerUser = asyncHandler(async (req, res) => {
     ),
   });
 
-  const createdUser = await User.findById(_id).select(
+  const createdUser = await User.findById(user._id).select(
     "-password -refreshToken -emailVerificationToken -emailVerificationExpiry",
   );
 
