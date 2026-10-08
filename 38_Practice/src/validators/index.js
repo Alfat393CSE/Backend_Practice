@@ -4,7 +4,7 @@ const userRegisterValidator = () => {
   return [
     body("username")
       .trim()
-      .isEmpty()
+      .notEmpty()
       .withMessage("username is required")
       .isLowercase()
       .withMessage("username must be in lowercase")
@@ -13,14 +13,14 @@ const userRegisterValidator = () => {
 
     body("email")
       .trim()
-      .isEmpty()
+      .notEmpty()
       .withMessage("email is required")
       .isEmail()
       .withMessage("email is invalid"),
 
     body("password")
       .trim()
-      .isEmpty()
+      .notEmpty()
       .withMessage("password is required")
       .isLength({ min: 8 })
       .withMessage("password must be at least 8 characters"),
