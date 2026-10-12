@@ -1,5 +1,9 @@
 import express from "express";
 
-const app = express()
+const app = express();
 
-export default app
+app.use("/", (req, res) => {
+  res.send("testing app...");
+});
+
+export default app;
