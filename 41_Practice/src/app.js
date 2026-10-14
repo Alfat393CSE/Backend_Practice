@@ -19,9 +19,11 @@ app.use(
 );
 
 // import modules
-import healthCheck from './routes/healthcheck.routes.js'
+import healthCheck from "./routes/healthcheck.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 
-app.use("/api/v1/healthcheck", healthCheck)
+app.use("/api/v1/healthcheck", healthCheck);
+app.use("/api/v1/auth", authRoutes);
 
 app.use("/", (req, res) => {
   res.send("testing app...");
