@@ -88,28 +88,36 @@ const login = asyncHandler(async (req, res) => {
     user._id,
   );
 
+  const isPasswordValid = await user.isPasswordCorrect(password);
+
+  if (!isPasswordValid) {
+    throw new ApiError(400, "Invalid credentials");
+  }
+
   const loggedInUser = await User.findById(user._id).select(
     "-password -refreshToken -emailVerificationToken -emailVerificationExpiry",
   );
 
   const options = {
     httpOnly: true,
-    secure: true
-  }
+    secure: true,
+  };
 
   res
     .status(200)
     .cookie("accessToken", accessToken, options)
     .cookie("refreshToken", refreshToken, options)
-    .json(new ApiResponse(
-      200, 
-      {
-        user: loggedInUser,
-        accessToken,
-        refreshToken
-      }, 
-      "User is logged in successfully"
-    ))
+    .json(
+      new ApiResponse(
+        200,
+        {
+          user: loggedInUser,
+          accessToken,
+          refreshToken,
+        },
+        "User is logged in successfully",
+      ),
+    );
 });
 
 export { registerUser, login };
